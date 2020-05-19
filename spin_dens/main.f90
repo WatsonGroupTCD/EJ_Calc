@@ -30,6 +30,8 @@ Program Jval_Calculator_Spin
  Write(*,*) 'Main report wiil be available in the file', Outfile
  Write(*,*) 'Energy related to energy of all possible spin configs'
  Write(*,*) 'is available in the file nrg_frm_jval'
+ Write(12,*) 'Please cite: Altering the nature of coupling by changing the oxidation state in a {Mn6} cage, DOI: 10.1039/D0DT01404D.'
+ Write(12,*)
  Write(12,*) '-------Calculating J values from Spin Densities-------'
  Write(12,*) 'This program will use the spin denstities and will not convert the'
  Write(12,*) 'spin terms to formal spins.'
