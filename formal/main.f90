@@ -34,7 +34,7 @@ Program jval_calc_form_comp
  Use enrg_frm_jval
  Call Get_Command_Argument(1, FileName1)
  Call Get_Command_Argument(2, FileName2)
- Outfile = trim(Filename1) // '.txt'
+ Outfile = trim(Filename1) // '_form.txt'
  stdv = .FALSE.
  Open (Unit = 11, file = FileName1, action = 'read', position = 'rewind', iostat = ios)
  Open (Unit = 12, file = Outfile, status = 'unknown', action = 'readwrite')
