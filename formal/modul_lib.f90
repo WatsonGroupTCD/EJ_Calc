@@ -122,6 +122,7 @@ Module modul_lib
         Allocate(jval_tb_solvd1(num_spin_dens_set - 1,Size(jpos) - 1), enrg_tb_slvd1(num_spin_dens_set - 1))
         x = num_spin_dens_set - 1
         poss_comb = comb(x,(Size(jpos) - 1))
+        Write(12,*)
         Write(12,*) 'Possible combination of equations per set of equations '
         Write(12,*) 'considered (i.e. total number of eqations -1):' 
         Write(12,*) x, 'C', (Size(jpos) - 1), '=', poss_comb
