@@ -328,7 +328,7 @@ Module modul_lib
                                 End If
                         End Do
                 End Do
-                Write(12,*) 'Total non singular solutions = ', counter
+                Write(12,*) 'Total non-singular solutions = ', counter
                 avg = avg/(counter) !poss_comb
                 main_cntr = main_cntr + counter
                 counter = 0
@@ -427,7 +427,7 @@ Module modul_lib
         Integer(kind = int_kind) :: k
         165 Format(1x, F10.5)
         Write(12,*)
-        Write(12,*) 'Total non singular equations', main_cntr
+        Write(12,*) 'Total non-singular equations', main_cntr
         Write(12,*) 'new average'
         Do k = 1,  Size(tot_avg)
                 Write(12, 165, advance = 'no') tot_avg(k)
