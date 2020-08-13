@@ -72,7 +72,7 @@ Contains
                         Call Abort
                 End If
                 tot_interac = num_mag_cent * (num_mag_cent - 1) / 2
-                Write(12,*) "Number of Magnetic centers:", num_mag_cent
+                Write(12,*) "Number of Magnetic centres:", num_mag_cent
                 Write(12,*) "Total number of possible interactions:", tot_interac
            !!!!! Determination of magnetic centres and their initialization ends
            !!!!!!
