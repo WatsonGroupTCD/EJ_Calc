@@ -495,7 +495,7 @@ Module modul_lib
                         End If
                 End Do
                 Write(14,*)
-                Write(12,*) 'Total non singular solutions = ', counter
+                Write(12,*) 'Total non-singular solutions = ', counter
                 avg = avg/(counter) 
                 main_cntr = main_cntr + counter
                 counter = 0
@@ -508,7 +508,7 @@ Module modul_lib
         End Do
         tot_avg = tot_avg/num_spin_dens_set
         Write(12,*) ' Global Average'
-        Write (12,*) 'Total non singular solutions = ', main_cntr
+        Write (12,*) 'Total non-singular solutions = ', main_cntr
         Do m = 1, Size(jpos) - 1
                 Write(12,112, advance = 'no') tot_avg(m)
         End Do
@@ -595,7 +595,7 @@ Module modul_lib
         Integer(kind = int_kind) :: k
         165 Format(1x, F10.4)
         Write(12,*)
-        Write(12,*) 'Total non singular equations', main_cntr
+        Write(12,*) 'Total non-singular equations', main_cntr
         Write(12,*) 'new average'
         Do k = 1,  Size(tot_avg)
                 Write(12, 165, advance = 'no') tot_avg(k)
