@@ -470,7 +470,7 @@ Module modul_lib
         134 Format(i2)
         138 Format(8x, i8)
         Write (12,*) ' Average J values'
-        Write (12,'(a)', advance = 'no') 'Ref. eq.     non singular solutions  '
+        Write (12,'(a)', advance = 'no') 'Ref. eq.     non-singular solutions  '
         Do m = 1, Size(jpos) - 1
                 Write (12,'(a)', advance = 'no') '    '
                 Write (12,'(a)', advance = 'no') 'J'
