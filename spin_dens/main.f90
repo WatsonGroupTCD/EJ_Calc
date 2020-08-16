@@ -55,6 +55,18 @@ Program Jval_Calculator_Spin
  !beyond 3 standard deviations and recalculate the standard deviation and repeat
  !this cycle till a self consistency is achieved.
  stdv = .FALSE.
+ 139 Format(i2)
+ Write(12,*)
+ Write(12,*) 'Removing solutions in which J-values deviate by more than 3 standard deviations'
+ Write(12,*)'Standard deviation (percentage standard deviation) on different J-values:'
+ Write (12,'(a)', advance = 'no')  'non-singular equations'
+ Do i = 1, Size(jpos) - 1
+         Write (12,'(a)', advance = 'no') '      '
+         Write (12,'(a)', advance = 'no') 'J'
+         Write (12, 139, advance = 'no') i 
+         Write (12,'(a)', advance = 'no') '    '
+ End Do
+
  Do While(stdv == .FALSE.)
         Call std_dev(tot_avg)
  End Do

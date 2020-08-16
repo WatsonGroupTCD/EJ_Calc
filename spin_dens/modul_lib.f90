@@ -55,7 +55,6 @@ Module modul_lib
                 Write(*,*)'Aborting'
                 Call abort()
         End If
-
         Write(12, *) 'Coefficients of J values' 
         178 Format(F10.4)
         155 Format(i2)
@@ -100,6 +99,7 @@ Module modul_lib
         Allocate(jval_tb_solvd1(num_spin_dens_set - 1,Size(jpos) - 1), enrg_tb_slvd1(num_spin_dens_set - 1))
         x = num_spin_dens_set - 1
         poss_comb = comb(x,(Size(jpos) - 1))
+        Write(12, *)
         Write(12,*) 'Possible combination of equations per set of equations '
         Write(12,*) 'considered (i.e. total number of eqations -1):' 
         Write(12,*) x, 'C', (Size(jpos) - 1), '=', poss_comb
@@ -303,9 +303,11 @@ Module modul_lib
         main_cntr = 0
         avg = 0
         tot_avg = 0
-        112 Format(1x, F10.5)
+        112 Format(3x, F10.4)
         134 Format(i2)
+        138 Format(8x, i8)
         Write (12,*) ' Average J values'
+        Write (12,'(a)', advance = 'no') 'Ref. eq.     non singular solutions  '
         Do m = 1, Size(jpos) - 1
                 Write (12,'(a)', advance = 'no') '     '
                 Write (12,'(a)', advance = 'no') 'J'
@@ -313,10 +315,10 @@ Module modul_lib
                 Write (12,'(a)', advance = 'no') '    '
         End Do
         Write (12,*)
-        Write (12,*) ' Average across each reference equation set:'
         x = num_spin_dens_set - 1
         poss_comb = comb(x,(Size(jpos) - 1)) 
         Do k = 1, num_spin_dens_set
+                Write (12, 134, advance = 'no') k
                 Do l = 1, poss_comb
                         If (jval_trkr(k, l,1) .ne. 0) then
                         counter = counter + 1
@@ -328,7 +330,9 @@ Module modul_lib
                                 End If
                         End Do
                 End Do
-                Write(12,*) 'Total non-singular solutions = ', counter
+                !Write(12,*) 'Total non-singular solutions = ', counter
+                Write(12, 138, advance='no') counter
+                Write(12, '(a)', advance='no') '              '
                 avg = avg/(counter) !poss_comb
                 main_cntr = main_cntr + counter
                 counter = 0
@@ -341,6 +345,9 @@ Module modul_lib
         End Do
         tot_avg = tot_avg/num_spin_dens_set
         Write(12,*) ' Global Average'
+        Write (12,'(a)', advance = 'no') '--'
+        Write (12,138, advance='no') main_cntr
+        Write(12, '(a)', advance='no') '              '
         Do m = 1, Size(jpos) - 1
                 Write(12,112, advance = 'no') tot_avg(m)
         End Do
@@ -352,8 +359,8 @@ Module modul_lib
          Subroutine std_dev(avg)
                 Integer(kind = int_kind) :: k, l, m
                 Real(kind = real_kind):: ss
-                Real(kind = real_kind), Dimension(:), Allocatable :: avg, var, stddev, std_per
-                Allocate (var(Size(avg)), stddev(Size(avg)), std_per(Size(avg)))
+                Real(kind = real_kind), Dimension(:), Allocatable :: avg, var !, stddev, std_per
+                Allocate (var(Size(avg))) !, stddev(Size(avg)), std_per(Size(avg)))
                 var = 0
                 stddev = 0
                 Do i = 1, num_spin_dens_set
@@ -369,17 +376,20 @@ Module modul_lib
                 stddev(:) = sqrt(var(:))
                 std_per(:) = stddev(:) / Abs(avg(:)) * 100
                 !stdv = .TRUE
-                Write(12,*)'total non-singular equations', main_cntr
-                Write(12,*)'standard deviation (percentage standard deviation):'
+                !Write(12,*)'total non-singular equations', main_cntr
+                134 Format(i2)
+                138 Format(i8)
                 165 Format(1x, F6.2)
                 166 Format(i3)
+                Write(12,*)
+                Write (12,138, advance='no') main_cntr
+                Write (12,'(a)', advance = 'no') '              '
                 Do k = 1, Size(avg)
                         Write(12, 165, advance = 'no') stddev(k)
                         Write(12, '(a)', advance = 'no') '('
                         Write(12, 166, advance = 'no') Int(std_per(k))
                         Write(12, '(a)', advance = 'no') '%)'
                 End Do
-                Write(12,*)
                 Call std_dev1(stddev)
          End Subroutine std_dev
          !This will check if all the valid J value sets are within 3 standard
@@ -425,13 +435,37 @@ Module modul_lib
 
  Subroutine final_print()
         Integer(kind = int_kind) :: k
-        165 Format(1x, F10.5)
+        134 Format(i2)
+        165 Format(3x, F10.4)
+        166 Format(1x, F6.2)
+        167 Format(i3)
         Write(12,*)
+        Write(12,*)
+        Write(12,*) 'Final results'
         Write(12,*) 'Total non-singular equations', main_cntr
-        Write(12,*) 'new average'
+        Write(12,*) 'Average J-values (cm-1) and standard deviations'
+        Write (12,'(a)', advance = 'no') '           '
+        Do k = 1, Size(jpos) - 1
+                Write (12,'(a)', advance = 'no') '      '
+                Write (12,'(a)', advance = 'no') 'J'
+                Write (12, 134, advance = 'no') k
+                Write (12,'(a)', advance = 'no') '    '
+        End Do
+        Write(12,*)
+        Write (12,'(a)', advance = 'no') 'J-val    '
         Do k = 1,  Size(tot_avg)
                 Write(12, 165, advance = 'no') tot_avg(k)
         End Do
+        Write(12,*)
+        Write (12,'(a)', advance = 'no') 'Std. Dev. '
+        Do k = 1, Size(jpos) - 1
+                Write(12, 166, advance = 'no') stddev(k)
+                Write(12, '(a)', advance = 'no') '('
+                Write(12, 167, advance = 'no') Int(std_per(k))
+                Write(12, '(a)', advance = 'no') '%)'
+        End Do 
+        Write(12,*)
+        Write(12,*)
         !Debugger. Prints all the J value sets that have been considered valid
         !after applying the standard deviation constraint.
 

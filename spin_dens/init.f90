@@ -20,6 +20,9 @@ Module init
  !hamil1 and hamil2 together keep track of which centres are interacting
  Real(kind = real_kind), Dimension(:), Allocatable :: energy, jvalu, tot_avg
  !energy stores the energy for each electronic configuration
+ Real(kind = real_kind), Dimension(:), Allocatable :: stddev, std_per
+ !stddev and std_per store the standard deviation and percentage standard
+ !deviation for the different J-values 
  Real(kind = real_kind), Dimension(:,:), Allocatable :: spin, hamil, jval
  !spin stores the spin density value associated with each metal centre
  !as
@@ -70,6 +73,7 @@ Contains
                 Call Abort
         End If
         tot_interac = num_mag_cent * (num_mag_cent - 1) / 2
+        Write(12,*)
         Write(12,*) "Number of Magnetic centres:", num_mag_cent
         Write(12,*) "Total number of possible interactions:", tot_interac
    !!!!! Determination of magnetic centres and their
@@ -89,7 +93,7 @@ Contains
                 End If
                 If (read_line(1:5) .ne. '     ' .AND. EndofFile .ne. .True.) Then
                         i = i + 1
-                        Write (12,*), read_line
+                        Write (12,*) read_line
                 End If
                 Read(13, '(a)', iostat = ios) read_line
         End Do
@@ -132,6 +136,8 @@ Contains
                 Call Abort
         End If
         Allocate(jpos(no_of_j_val + 1))
+        Allocate(stddev(Size(jpos) - 1), std_per(Size(jpos) - 1))
+        Write (12,*)
         Write (12,*)'No. of J value asked for = ', no_of_j_val
         If (no_of_j_val >= num_spin_dens_set) Then
                 Write(12,*) ' You need more equations to obtain these many J values. '
