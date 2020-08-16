@@ -70,7 +70,7 @@ Program Jval_Calculator_Spin
  Do While(stdv == .FALSE.)
         Call std_dev(tot_avg)
  End Do
-
+ Write(12,*) 'Self-consistency achieved!'
  Call final_print()
  Call backtrack1(jval, tot_avg) 
  Call avg_spin()       !from enrg_frm_jval.f90
