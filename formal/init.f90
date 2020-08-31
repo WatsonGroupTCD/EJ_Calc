@@ -95,7 +95,8 @@ Contains
                         End If
                         If (read_line(1:5) .ne. '     ' .AND. EndofFile .ne. .True.) Then
                                 i = i + 1
-                                Write (12,*), read_line
+                                Write (12,'(a)', advance = 'no') read_line
+                                Write(12,*)
                         End If
                         Read(13, '(a)', iostat = ios) read_line
                 End Do
